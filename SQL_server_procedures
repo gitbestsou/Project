@@ -4,7 +4,10 @@ GO
 /****** Object:  Schema [GreatOutdoors]    Script Date: 27-09-2019 18:24:43 ******/
 CREATE SCHEMA [GreatOutdoors]
 GO
+/*----------*/
 
+
+/*-----------------------------------------------Table Creation---------------------------------------------------------------*/
 CREATE TABLE GreatOutdoors.Returns
 (
 ReturnID varchar(255) PRIMARY KEY,
@@ -27,7 +30,11 @@ TotalPrice int NOT NULL CHECK (TotalPrice>0),
 AddressID varchar(255) NOT NULL
 )
 GO
+/*----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+
+
+/*----------------------------------------------------------Stored Procedures for Return Method----------------------------------------------------*/
 Create Procedure GreatOutdoors.AddReturn(@returnID varchar(255), @orderID varchar(255), @channelOfReturn varchar(7), @returnAmount money, @returnDateTime datetime)
 as
 begin
@@ -91,10 +98,29 @@ end catch
 end
 Go
 
+Create Procedure GreatOutdoors.DeleteReturn(@returnID VARCHAR(255))
+as
+begin
+begin try
+DELETE FROM GreatOutdoors.Returns WHERE ReturnID = @returnID
+end try
+begin catch
+ PRINT @@ERROR;
+ throw 5006,'Values not deleted.',3
+ return 0
+end catch
+end
+GO
+
+/*-----------------------------------------------------------------------------------------------------------------------------*/
 
 
 
 
+
+
+
+/*-------------------------------------------------Stored Procedures for Return Details-----------------------------*/
 
 Create Procedure GreatOutdoors.AddReturnDetails(@returnDetailID varchar(255), @returnID varchar(255),@productID varchar(255), @quantity smallint,@reasonOfReturn varchar(10), @unitPrice int, @totalPrice money, @addressID varchar(255))
 as
@@ -120,3 +146,55 @@ VALUES(@returnDetailID, @returnID, @productID, @quantity,@reasonOfReturn, @UnitP
 end
 GO
 
+Create Procedure GreatOutdoors.GetReturnDetailsByReturnID(@returnID VARCHAR(255))
+as
+begin
+begin try
+Select * from GreatOutdoors.ReturnDetails where ReturnID = @returnID
+end try
+begin catch
+ PRINT @@ERROR;
+ throw 5007,'Invalid values fetched.',1
+ return 0
+end catch
+end
+GO
+
+
+
+Create Procedure GreatOutdoors.GetReturnDetailsByProductID(@productID VARCHAR(255))
+as
+begin
+begin try
+Select * from GreatOutdoors.ReturnDetails where ProductID = @productID
+end try
+begin catch
+ PRINT @@ERROR;
+ throw 5000,'Invalid values fetched.',2
+ return 0
+end catch
+end
+GO
+--created procedure
+
+
+
+
+
+Create Procedure GreatOutdoors.DeleteReturnDetails(@returnID VARCHAR(255), @productID VARCHAR(255))
+as
+begin
+begin try
+DELETE FROM GreatOutdoors.ReturnDetails WHERE ReturnID = @returnID AND ProductID = @productID
+end try
+begin catch
+ PRINT @@ERROR;
+ throw 5000,'Values not deleted.',3
+ return 0
+end catch
+end
+GO
+--created procedure
+
+
+/*-------------------------------------------------------------------------------------------------------------------*/
