@@ -13,25 +13,25 @@ Last Modified Date - 12/10/2019
 </div>
 <br />
 
+<!--This portion of code is responsible for displaying all the orders that have been placed till now-->
 <div class="row">
-
   <div class="col-md-9 col-lg-10">
-    <table class="table mt-2" style="background-color:aliceblue;display:normal" align="center" border="1" cellpadding="10" cellspacing="10">
+    <table class="table mt-2" style="background-color:aliceblue;display:normal;align-items:center" align="center" border="1" cellpadding="10" cellspacing="10">
       <tr class="table-secondary">
         <th>No.</th>
         <th>Order Date</th>
-        <th>Total Quantity</th>
+        <th>Total Products in the order</th>
         <th>Total Amount</th>
         <th>Channel Of Order</th>
         <th class="text-secondary">Action  </th>
       </tr>
       <tbody>
         <tr *ngFor="let or of orders;let index = index;">
-          <td>{{index+1}}</td>
-          <td>{{or.creationDateTime}}</td>
-          <td>{{or.totalQuantity}}</td>
-          <td>{{or.totalAmount}}</td>
-          <td>{{or.channelOfOrder}}</td>
+          <td align="center">{{index+1}}</td>
+          <td align="center">{{or.creationDateTime}}</td>
+          <td align="center">{{or.totalQuantity}}</td>
+          <td align="center">{{or.totalAmount}}</td>
+          <td align="center">{{or.channelOfOrder}}</td>
           <td>
             <div class="btn-group">
               <button style="background-color:blue" class="btn btn-secondary" (click)="onViewDetailsClick(index)">View Details</button>
@@ -44,9 +44,8 @@ Last Modified Date - 12/10/2019
 </div>
 
 
-
-
-<h3>Select a Product to Return or Cancel:</h3>
+<h3 align="center"><u>Select a Product to Return or Cancel:</u></h3>
+<!--When User click the 'View Details' button of a particular order, this code is responsible to display all the corresponding products of that order-->
 <form [formGroup]="viewDetailsForm">
   <div class="row">
     <div class="col-md-9 col-lg-10">
@@ -83,7 +82,7 @@ Last Modified Date - 12/10/2019
   </div>
 </form>
 
-
+<!--This code is responsible for displaying the modal ,when user initiate a return process for a particular product-->
 <!-- Place Return Modal -->
 <form [formGroup]="placeReturnForm">
   <div class="modal fade" id="placeReturnModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -132,7 +131,7 @@ Last Modified Date - 12/10/2019
   </div>
 </form>
 
-
+<!--This code is responsible for displaying the modal ,when user initiate a cancel process for a particular product-->
 <!-- Request Cancel Modal -->
 <form [formGroup]="requestCancelForm">
   <div class="modal fade" id="requestCancelModal" tabindex="-1" role="dialog" aria-hidden="true">

@@ -11,7 +11,7 @@ import { OrdersService } from '../../Services/orders.service';
 import { error } from 'util';
 import { ReturnService } from 'src/app/Services/returns.service';
 import { ReturnDetailsService } from 'src/app/Services/return-detail.service';
-import { type } from 'os';
+
 
 /*
   
@@ -24,7 +24,7 @@ Last Modified Date - 12 / 10 / 2019
 
 */
 
-
+/*The components required to render the template in browser*/ 
 @Component({
   selector: 'app-returns',
   templateUrl: './returns.component.html',
@@ -95,6 +95,8 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
       console.log(error);
     });
 
+
+    /*This code is commented because we do not need the entire orderdetails table at once now,we need corresponding ordedetails of a particulaar OrderID*/
     /*this.orderDetailsService.GetAllOrderDetails().subscribe((response) => {
       this.orderDetails = response;
 
@@ -102,13 +104,7 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
       console.log(error);
       });*/
 
-
-
   }
-
-
-
-
 
 
   getFormControlCssClass(formControl: FormControl, formGroup: FormGroup): any {
@@ -127,19 +123,11 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
   }
 
 
-
+  /*This method will invoke when User will click the 'View Detail' button to view the corresponding products in a Order*/
   onViewDetailsClick(index) {
     this.indexComponent = index;
     this.viewDetailsForm.reset();
     this.viewDetailsForm["submitted"] = false;
-    /*var str = this.orders[index].orderID;
-    console.log(str);
-    this.orderDetails.forEach(function (value) {
-      if (value.orderID == str)
-      {
-        console.log(value);
-      }
-    });*/
     this.viewDetailsForm.patchValue({
       id: this.orders[index].id,
       orderID: this.orders[index].orderID,
@@ -162,6 +150,7 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
 
   }
 
+  /*This method will invoke when User initiate a return process for a particular product*/
   onPlaceReturnClick(index) {
     console.log(this.orderDetails[index].productName);
     this.placeReturnForm.reset();
@@ -179,6 +168,8 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
       creationDateTime: this.orderDetails[index].creationDateTime
     });
   }
+
+  /*This method will invoke when User initiate a cancel process for a particular product*/
   onRequestCancelClick(index) {
     this.requestCancelForm.reset();
     this.requestCancelForm["submited"] = false;
@@ -200,18 +191,18 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
 
 
 
-
-  onPlaceReturnConfirmClick(event) {
+  /*This method will invoke when User confirm the return of a particular product*/
+  onPlaceReturnConfirmClick(event)
+  {
     this.placeReturnForm["submitted"] = true;
-    if (this.placeReturnForm.valid) {
+    if (this.placeReturnForm.valid)
+    {
       this.placeReturnDisabled = true;
       var orderDetail: OrderDetail = this.placeReturnForm.value;
-
       this.returnDetailsService.ReturnOrderDetail(orderDetail).subscribe((returnResponse) => {
         this.placeReturnForm.reset();
         $("#btnPlaceReturnCancel").trigger("click");
         this.placeReturnDisabled = false;
-
 
         this.orderDetailsService.GetOrderDetailByOrderID(this.orders[this.indexComponent].orderID).subscribe((getResponse) => {
           this.orderDetails = getResponse;
@@ -224,27 +215,24 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
           this.placeReturnDisabled = false;
         });
     }
-    else {
+    else
+    {
       super.getFormGroupErrors(this.placeReturnForm);
     }
-    //console.log($("input[name='reason']:checked").value);
-    //console.log(document.getElementById('reasonReturn').nodeValue);
   }
 
-
-  onRequestCancelConfirmClick(event) {
-
+  /*This method will invoke when User confirm the cancellation of a particular product*/
+  onRequestCancelConfirmClick(event)
+  {
     this.requestCancelForm["submitted"] = true;
-    if (this.requestCancelForm.valid) {
+    if (this.requestCancelForm.valid)
+    {
       this.requestCancelDisabled = true;
       var orderDetail: OrderDetail = this.requestCancelForm.value;
-
       this.returnDetailsService.CancelOrderDetail(orderDetail).subscribe((cancelResponse) => {
         this.requestCancelForm.reset();
         $("#btnRequestCancelCancel").trigger("click");
         this.requestCancelDisabled = false;
-
-
         this.orderDetailsService.GetOrderDetailByOrderID(this.orders[this.indexComponent].orderID).subscribe((getResponse) => {
           this.orderDetails = getResponse;
         }, (error) => {
@@ -257,11 +245,10 @@ export class ReturnComponent extends GreatOutdoorsComponentBase implements OnIni
           this.requestCancelDisabled = false;
         });
     }
-    else {
+    else
+    {
       super.getFormGroupErrors(this.requestCancelForm);
     }
-
-
 
   }
 
