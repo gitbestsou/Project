@@ -1,0 +1,215 @@
+<!--
+
+*
+*Developer Name : Sourav Maji
+*Use Case -   1. Return a product from Orders which has been delivered
+              2. Cancel a product from Orders which has been placed but not deliverd
+Creation Date - 10/10/2019
+Last Modified Date - 12/10/2019
+
+-->
+<!--<div>
+  <h1 align="center"><u>Return and Cancel Orders</u></h1>
+</div>
+<br />-->
+<!--This portion of code is responsible for displaying all the orders that have been placed till now-->
+<div *ngIf="showOrders" class="row">
+  <div class="col-md-9 col-lg-10 mx-auto">
+    <h1>Return and Cancel Orders</h1>
+    <button style="background-color:blue;" class="btn btn-secondary pull-right" (click)="viewAllReturns()">View Return History</button>
+    <table class="table mt-2" style="background-color:aliceblue;display:normal;align-items:center;margin:auto" align="center" border="1" cellpadding="10" cellspacing="10">
+      <tr class="table-secondary">
+        <th>No.</th>
+        <th>Order Date</th>
+        <th>Total Products in the order</th>
+        <th>Total Amount</th>
+        <th>Channel Of Order</th>
+        <th class="text-secondary">Action  </th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let or of orders;let index = index;">
+          <td align="center">{{index+1}}</td>
+          <td align="center">{{or.creationDateTime}}</td>
+          <td align="center">{{or.totalQuantity}}</td>
+          <td align="center">{{or.totalAmount}}</td>
+          <td align="center">{{or.channelOfOrder}}</td>
+          <td>
+            <div class="btn-group">
+              <button style="background-color:blue" class="btn btn-secondary" (click)="onViewDetailsClick(index)">View Details</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<!--When User click the 'View Details' button of a particular order, this code is responsible to display all the corresponding products of that order-->
+<!--<form [formGroup]="viewDetailsForm">-->
+<div *ngIf="showOrderDetails" class="row">
+  <div class="col-md-9 col-lg-10 mx-auto">
+    <div>
+      <h3>Select a Product to Return or Cancel</h3>
+      <button style="background-color:blue;" class="btn btn-secondary pull-right" (click)="goBackToOrders()">Go Back to Orders</button>
+    </div>
+    <br />
+    <table class="table mt-2" [ngStyle]="{display:orderDetailsTableDisplayController}" align="center" border="1" cellpadding="10" cellspacing="10">
+      <tr class="table-secondary">
+        <th>No.</th>
+        <th>Product name</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total Price</th>
+        <th>Order Date</th>
+        <th>Order Status</th>
+        <th class="text-secondary">Actions  </th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let od of orderDetails;let index = index;">
+          <td>{{index+1}}</td>
+          <td>{{od.productName}}</td>
+          <td>{{od.quantity}}</td>
+          <td>{{od.unitPrice}}</td>
+          <td>{{od.totalPrice}}</td>
+          <td>{{od.creationDateTime}}</td>
+          <td style="color:blue">{{od.status}}</td>
+          <td>
+            <div class="btn-group">
+              <button style="background-color:darkred" class="btn btn-secondary" data-toggle="modal" data-target="#placeReturnModal" (click)="onPlaceReturnClick(index)">Return</button>
+              <button style="background-color:red" class="btn btn-danger" data-toggle="modal" data-target="#requestCancelModal" (click)="onRequestCancelClick(index)">Cancel</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--</form>-->
+
+
+<div *ngIf="showReturnHistory" class="row">
+  <div class="col-md-9 col-lg-10 mx-auto">
+    <h1>Return History</h1>
+    <button style="background-color:blue;" class="btn btn-secondary pull-right" (click)="goBackToOrders()">Go Back to Orders</button>
+    <table class="table mt-2" align="center" border="1" cellpadding="10" cellspacing="10">
+      <tr class="table-secondary">
+        <th>No.</th>
+        <th>Return Date</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Total Amount</th>
+        <th>Reason Of Return</th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let rd of returnDetails;let index = index;">
+          <td align="center">{{index+1}}</td>
+          <td align="center">{{rd.creationDateTime}}</td>
+          <td align="center">{{rd.productName}}</td>
+          <td align="center">{{rd.quantity}}</td>
+          <td align="center">{{rd.totalPrice}}</td>
+          <td align="center">{{rd.reasonOfReturn}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+<!--This code is responsible for displaying the modal ,when user initiate a return process for a particular product-->
+<!-- Place Return Modal -->
+<form [formGroup]="placeReturnForm">
+  <div class="modal fade" id="placeReturnModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Place Return</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="form-group form-row">
+          <label for="productName" class="col-form-label col-md-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product Name:</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="Product Name" readonly="readonly" class="form-control-plaintext" id="productName" formControlName="productName" />
+          </div>
+          <label for="quantity" class="col-form-label col-md-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="Quantity" readonly="readonly" class="form-control-plaintext" id="quantity" formControlName="quantity" />
+          </div>
+          <label for="totalPrice" class="col-form-label col-md-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Price:</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="TotalPrice" readonly="readonly" class="form-control-plaintext" id="totalPrice" formControlName="totalPrice" />
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group form-row">
+            <label for="reasonOfReturn" class="col-form-label col-md-4">Select Reason Of Return:</label>
+            <div class="col-md-8" id="reasonReturn">
+              <input type="radio" id="i" name="reasonOfReturn" formControlName="reasonOfReturn" value="Incomplete" checked="checked">Incomplete
+              <input type="radio" id="w" name="reasonOfReturn" formControlName="reasonOfReturn" value="Wrong">Wrong<br />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnPlaceReturnCancel">
+              <i class="fa fa-times-circle"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-success" (click)="onPlaceReturnConfirmClick($event)" [disabled]="placeReturnDisabled">
+              <span *ngIf="!placeReturnDisabled"><i class="fa fa-save"></i> Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--This code is responsible for displaying the modal ,when user initiate a cancel process for a particular product-->
+<!-- Request Cancel Modal -->
+<form [formGroup]="requestCancelForm">
+  <div class="modal fade" id="requestCancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Request Cancel</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <h5 class="mb-4">Are you sure you want to cancel this Order?</h5>
+
+          <div class="form-group form-row">
+            <label for="productName" class="col-form-label col-md-4">Product Name:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Product Name" readonly="readonly" class="form-control-plaintext" id="productName" formControlName="productName" />
+            </div>
+            <label for="quantity" class="col-form-label col-md-4">Quantity:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Quantity" readonly="readonly" class="form-control-plaintext" id="quantity" formControlName="quantity" />
+            </div>
+            <label for="totalPrice" class="col-form-label col-md-4">Total Price:</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="TotalPrice" readonly="readonly" class="form-control-plaintext" id="totalPrice" formControlName="totalPrice" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnRequestCancelCancel">
+              <i class="fa fa-times-circle"></i> No
+            </button>
+            <button type="submit" class="btn btn-success" (click)="onRequestCancelConfirmClick($event)" [disabled]="requestCancelDisabled">
+              <span *ngIf="!requestCancelDisabled"><i class="fa fa-save"></i> Yes</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
