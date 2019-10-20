@@ -1,0 +1,1981 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GreatOutdoorsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RetailerID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Line1" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Line2" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="States" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="MobileNo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CreationDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="DiscountedUnitPrice" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="GiftPacking" Type="bit" />
+          <Property Name="AddressID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CurrentStatus" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" />
+          <Property Name="ModifiedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RetailerID" Type="uniqueidentifier" />
+          <Property Name="SalespersonID" Type="uniqueidentifier" />
+          <Property Name="TotalQuantity" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ChannelOfSale" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="OrderDateTime" Type="datetime" />
+          <Property Name="ModifiedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Stock" Type="int" />
+          <Property Name="Size" Type="varchar" MaxLength="4" />
+          <Property Name="Colour" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TechnicalSpecifications" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="CostPrice" Type="money" Nullable="false" />
+          <Property Name="SellingPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountPercentage" Type="decimal" Precision="2" Scale="2" />
+        </EntityType>
+        <EntityType Name="Retailers">
+          <Key>
+            <PropertyRef Name="RetailerID" />
+          </Key>
+          <Property Name="RetailerID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RetailerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RetailerMobile" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RetailerPassword" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="RetailerDiscountPercentage" Type="decimal" Precision="2" Scale="2" />
+          <Property Name="CreationDateTime" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Return">
+          <Key>
+            <PropertyRef Name="ReturnID" />
+          </Key>
+          <Property Name="ReturnID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrderID" Type="uniqueidentifier" />
+          <Property Name="ChannelOfReturn" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="ReturnAmount" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ReturnDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnDetails">
+          <Key>
+            <PropertyRef Name="ReturnDetailID" />
+          </Key>
+          <Property Name="ReturnDetailID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReturnID" Type="uniqueidentifier" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ReasonOfReturn" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="AddressID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="SalesPersons">
+          <Key>
+            <PropertyRef Name="SalespersonID" />
+          </Key>
+          <Property Name="SalespersonID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Mobile" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="Bonus" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="Target" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="JoiningDate" Type="datetime" Nullable="false" />
+          <Property Name="AddressLine1" Type="varchar" MaxLength="500" />
+          <Property Name="AddressLine2" Type="varchar" MaxLength="500" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="State" Type="varchar" MaxLength="100" />
+          <Property Name="Pincode" Type="varchar" MaxLength="6" />
+          <Property Name="Birthdate" Type="datetime" Nullable="false" />
+          <Property Name="LastAccountModifiedDateTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_TeamA_Address_ReturnDetails_AddressID">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Addresses_RetailerID">
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="1" />
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="RetailerID" />
+            </Principal>
+            <Dependent Role="Addresses">
+              <PropertyRef Name="RetailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Addresses_AddressID">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Orders_OrderID">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_ReturnTable_OrderID">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Return" Type="Self.Return" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Return">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_TeamA_Retailers_RetailerID">
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="RetailerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RetailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_TeamA_Salespersons_SalespersonID">
+          <End Role="SalesPersons" Type="Self.SalesPersons" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesPersons">
+              <PropertyRef Name="SalespersonID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SalespersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Products_ReturnDetails_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_ReturnTable_ReturnDetails_ReturnID">
+          <End Role="Return" Type="Self.Return" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Return">
+              <PropertyRef Name="ReturnID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="ReturnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="AddressID" Type="varchar" Mode="In" />
+          <Parameter Name="RetailerID" Type="varchar" Mode="In" />
+          <Parameter Name="Line1" Type="varchar" Mode="In" />
+          <Parameter Name="Line2" Type="varchar" Mode="In" />
+          <Parameter Name="City" Type="varchar" Mode="In" />
+          <Parameter Name="Pincode" Type="char" Mode="In" />
+          <Parameter Name="State" Type="varchar" Mode="In" />
+          <Parameter Name="MobileNo" Type="char" Mode="In" />
+          <Parameter Name="CreationDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="LastModifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AddOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="salespersonID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="totalQuantity" Type="int" Mode="In" />
+          <Parameter Name="totalAmount" Type="decimal" Mode="In" />
+          <Parameter Name="channelOfSale" Type="char" Mode="In" />
+        </Function>
+        <Function Name="AddOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderDetailID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="discountedUnitPrice" Type="int" Mode="In" />
+          <Parameter Name="totalPrice" Type="int" Mode="In" />
+          <Parameter Name="giftPacking" Type="bit" Mode="In" />
+          <Parameter Name="addressID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="AddProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="prodname" Type="varchar" Mode="In" />
+          <Parameter Name="category" Type="varchar" Mode="In" />
+          <Parameter Name="stock" Type="int" Mode="In" />
+          <Parameter Name="size" Type="varchar" Mode="In" />
+          <Parameter Name="colour" Type="varchar" Mode="In" />
+          <Parameter Name="techspecs" Type="varchar" Mode="In" />
+          <Parameter Name="cprice" Type="decimal" Mode="In" />
+          <Parameter Name="sprice" Type="decimal" Mode="In" />
+          <Parameter Name="discountpercentage" Type="decimal" Mode="In" />
+          <Parameter Name="img" Type="image" Mode="In" />
+        </Function>
+        <Function Name="AddRetailer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="retailerName" Type="varchar" Mode="In" />
+          <Parameter Name="retailerMobile" Type="char" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="retailerPassword" Type="varchar" Mode="In" />
+          <Parameter Name="creationDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AddReturn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="channelOfReturn" Type="varchar" Mode="In" />
+          <Parameter Name="returnAmount" Type="decimal" Mode="In" />
+          <Parameter Name="returnDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="lastModifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AddReturnDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnDetailID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="returnID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="reasonOfReturn" Type="varchar" Mode="In" />
+          <Parameter Name="unitPrice" Type="int" Mode="In" />
+          <Parameter Name="totalPrice" Type="money" Mode="In" />
+          <Parameter Name="addressID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="AddSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="salespersonname" Type="varchar" Mode="In" />
+          <Parameter Name="mobile" Type="char" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="salary" Type="decimal" Mode="In" />
+          <Parameter Name="bonus" Type="decimal" Mode="In" />
+          <Parameter Name="target" Type="decimal" Mode="In" />
+          <Parameter Name="joiningdate" Type="datetime" Mode="In" />
+          <Parameter Name="addressl1" Type="varchar" Mode="In" />
+          <Parameter Name="addressl2" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="pincode" Type="varchar" Mode="In" />
+          <Parameter Name="birthdate" Type="datetime" Mode="In" />
+          <Parameter Name="lastAccountModifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DeleteAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="AddressID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodid" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteRetailer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteReturn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteReturnDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="DeleteSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonid" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetAllAddresses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetAllProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetAllRetailers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetAllReturnDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetAllReturns" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetAllSalesPersons" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetOrderDetailsByOrderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetOrderDetailsByProductID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetOrderOnlineSold" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA" />
+        <Function Name="GetOrdersByOrderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetOrdersbyRetailerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetOrdersBySalespersonID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetProductByProductID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodid" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="category" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRetailerByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRetailerByEmailAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="retailerPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRetailerByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRetailerByRetailerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetReturnByOrderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetReturnByReturnID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetReturnDetailsByProductID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetReturnDetailsByReturnID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="returnID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetSalesPersonByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetSalesPersonByEmailAndPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetSalesPersonBySalesPersonID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonid" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetSalesPersonsByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="AddressID" Type="varchar" Mode="In" />
+          <Parameter Name="RetailerID" Type="varchar" Mode="In" />
+          <Parameter Name="Line1" Type="varchar" Mode="In" />
+          <Parameter Name="Line2" Type="varchar" Mode="In" />
+          <Parameter Name="City" Type="varchar" Mode="In" />
+          <Parameter Name="Pincode" Type="int" Mode="In" />
+          <Parameter Name="State" Type="varchar" Mode="In" />
+          <Parameter Name="MobileNo" Type="varchar" Mode="In" />
+          <Parameter Name="CreationDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="LastModifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateOrderDetailStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="orderID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="productID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="currentStatus" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdatePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="retailerPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateProductDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="prodname" Type="varchar" Mode="In" />
+          <Parameter Name="category" Type="varchar" Mode="In" />
+          <Parameter Name="size" Type="varchar" Mode="In" />
+          <Parameter Name="colour" Type="varchar" Mode="In" />
+          <Parameter Name="techspecs" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateProductStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="prodid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="stock" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateRetailer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="retailerID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="retailerName" Type="varchar" Mode="In" />
+          <Parameter Name="retailerMobile" Type="char" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedDateTime" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateSalesPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="mobile" Type="char" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateSalesPersonPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="TeamA">
+          <Parameter Name="salespersonid" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="GreatOutdoorsModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailers" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="Return" EntityType="Self.Return" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="ReturnDetails" EntityType="Self.ReturnDetails" Schema="TeamA" store:Type="Tables" />
+          <EntitySet Name="SalesPersons" EntityType="Self.SalesPersons" Schema="TeamA" store:Type="Tables" />
+          <AssociationSet Name="FK_TeamA_Address_ReturnDetails_AddressID" Association="Self.FK_TeamA_Address_ReturnDetails_AddressID">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Addresses_RetailerID" Association="Self.FK_TeamA_Addresses_RetailerID">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Addresses" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Addresses_AddressID" Association="Self.FK_TeamA_OrderDetails_TeamA_Addresses_AddressID">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Orders_OrderID" Association="Self.FK_TeamA_OrderDetails_TeamA_Orders_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Products_ProductID" Association="Self.FK_TeamA_OrderDetails_TeamA_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_ReturnTable_OrderID" Association="Self.FK_TeamA_Orders_ReturnTable_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Return" EntitySet="Return" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_TeamA_Retailers_RetailerID" Association="Self.FK_TeamA_Orders_TeamA_Retailers_RetailerID">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_TeamA_Salespersons_SalespersonID" Association="Self.FK_TeamA_Orders_TeamA_Salespersons_SalespersonID">
+            <End Role="SalesPersons" EntitySet="SalesPersons" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Products_ReturnDetails_ProductID" Association="Self.FK_TeamA_Products_ReturnDetails_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_ReturnTable_ReturnDetails_ReturnID" Association="Self.FK_TeamA_ReturnTable_ReturnDetails_ReturnID">
+            <End Role="Return" EntitySet="Return" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GreatOutdoorsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Guid" Nullable="false" />
+          <Property Name="RetailerID" Type="Guid" Nullable="false" />
+          <Property Name="Line1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Line2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="States" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CreationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ReturnDetails" Relationship="Self.FK_TeamA_Address_ReturnDetails_AddressID" FromRole="Addresses" ToRole="ReturnDetails" />
+          <NavigationProperty Name="Retailer" Relationship="Self.FK_TeamA_Addresses_RetailerID" FromRole="Addresses" ToRole="Retailers" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Addresses_AddressID" FromRole="Addresses" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Guid" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="DiscountedUnitPrice" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="GiftPacking" Type="Boolean" />
+          <Property Name="AddressID" Type="Guid" Nullable="false" />
+          <Property Name="CurrentStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Addresses_AddressID" FromRole="OrderDetails" ToRole="Addresses" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Orders_OrderID" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Products_ProductID" FromRole="OrderDetails" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <Property Name="RetailerID" Type="Guid" />
+          <Property Name="SalespersonID" Type="Guid" />
+          <Property Name="TotalQuantity" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ChannelOfSale" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Orders_OrderID" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="Returns" Relationship="Self.FK_TeamA_Orders_ReturnTable_OrderID" FromRole="Orders" ToRole="Return" />
+          <NavigationProperty Name="Retailer" Relationship="Self.FK_TeamA_Orders_TeamA_Retailers_RetailerID" FromRole="Orders" ToRole="Retailers" />
+          <NavigationProperty Name="SalesPerson" Relationship="Self.FK_TeamA_Orders_TeamA_Salespersons_SalespersonID" FromRole="Orders" ToRole="SalesPersons" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Stock" Type="Int32" />
+          <Property Name="Size" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Colour" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TechnicalSpecifications" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="SellingPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DiscountPercentage" Type="Decimal" Precision="2" Scale="2" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_TeamA_OrderDetails_TeamA_Products_ProductID" FromRole="Products" ToRole="OrderDetails" />
+          <NavigationProperty Name="ReturnDetails" Relationship="Self.FK_TeamA_Products_ReturnDetails_ProductID" FromRole="Products" ToRole="ReturnDetails" />
+        </EntityType>
+        <EntityType Name="Retailer">
+          <Key>
+            <PropertyRef Name="RetailerID" />
+          </Key>
+          <Property Name="RetailerID" Type="Guid" Nullable="false" />
+          <Property Name="RetailerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RetailerMobile" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RetailerPassword" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RetailerDiscountPercentage" Type="Decimal" Precision="2" Scale="2" />
+          <Property Name="CreationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK_TeamA_Addresses_RetailerID" FromRole="Retailers" ToRole="Addresses" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_TeamA_Orders_TeamA_Retailers_RetailerID" FromRole="Retailers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Return">
+          <Key>
+            <PropertyRef Name="ReturnID" />
+          </Key>
+          <Property Name="ReturnID" Type="Guid" Nullable="false" />
+          <Property Name="OrderID" Type="Guid" />
+          <Property Name="ChannelOfReturn" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ReturnAmount" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ReturnDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_TeamA_Orders_ReturnTable_OrderID" FromRole="Return" ToRole="Orders" />
+          <NavigationProperty Name="ReturnDetails" Relationship="Self.FK_TeamA_ReturnTable_ReturnDetails_ReturnID" FromRole="Return" ToRole="ReturnDetails" />
+        </EntityType>
+        <EntityType Name="ReturnDetail">
+          <Key>
+            <PropertyRef Name="ReturnDetailID" />
+          </Key>
+          <Property Name="ReturnDetailID" Type="Guid" Nullable="false" />
+          <Property Name="ReturnID" Type="Guid" />
+          <Property Name="ProductID" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="ReasonOfReturn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="AddressID" Type="Guid" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_TeamA_Address_ReturnDetails_AddressID" FromRole="ReturnDetails" ToRole="Addresses" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_TeamA_Products_ReturnDetails_ProductID" FromRole="ReturnDetails" ToRole="Products" />
+          <NavigationProperty Name="Return" Relationship="Self.FK_TeamA_ReturnTable_ReturnDetails_ReturnID" FromRole="ReturnDetails" ToRole="Return" />
+        </EntityType>
+        <EntityType Name="SalesPerson">
+          <Key>
+            <PropertyRef Name="SalespersonID" />
+          </Key>
+          <Property Name="SalespersonID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mobile" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="Bonus" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="Target" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AddressLine1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastAccountModifiedDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_TeamA_Orders_TeamA_Salespersons_SalespersonID" FromRole="SalesPersons" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_TeamA_Address_ReturnDetails_AddressID">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Addresses_RetailerID">
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="1" />
+          <End Role="Addresses" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="RetailerID" />
+            </Principal>
+            <Dependent Role="Addresses">
+              <PropertyRef Name="RetailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Addresses_AddressID">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Orders_OrderID">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_OrderDetails_TeamA_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_ReturnTable_OrderID">
+          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Return" Type="Self.Return" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Return">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_TeamA_Retailers_RetailerID">
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="RetailerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RetailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Orders_TeamA_Salespersons_SalespersonID">
+          <End Role="SalesPersons" Type="Self.SalesPerson" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesPersons">
+              <PropertyRef Name="SalespersonID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SalespersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_Products_ReturnDetails_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamA_ReturnTable_ReturnDetails_ReturnID">
+          <End Role="Return" Type="Self.Return" Multiplicity="0..1" />
+          <End Role="ReturnDetails" Type="Self.ReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Return">
+              <PropertyRef Name="ReturnID" />
+            </Principal>
+            <Dependent Role="ReturnDetails">
+              <PropertyRef Name="ReturnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeamAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailer" />
+          <EntitySet Name="Returns" EntityType="Self.Return" />
+          <EntitySet Name="ReturnDetails" EntityType="Self.ReturnDetail" />
+          <EntitySet Name="SalesPersons" EntityType="Self.SalesPerson" />
+          <AssociationSet Name="FK_TeamA_Address_ReturnDetails_AddressID" Association="Self.FK_TeamA_Address_ReturnDetails_AddressID">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Addresses_RetailerID" Association="Self.FK_TeamA_Addresses_RetailerID">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Addresses" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Addresses_AddressID" Association="Self.FK_TeamA_OrderDetails_TeamA_Addresses_AddressID">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Orders_OrderID" Association="Self.FK_TeamA_OrderDetails_TeamA_Orders_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_OrderDetails_TeamA_Products_ProductID" Association="Self.FK_TeamA_OrderDetails_TeamA_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_ReturnTable_OrderID" Association="Self.FK_TeamA_Orders_ReturnTable_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Return" EntitySet="Returns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_TeamA_Retailers_RetailerID" Association="Self.FK_TeamA_Orders_TeamA_Retailers_RetailerID">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Orders_TeamA_Salespersons_SalespersonID" Association="Self.FK_TeamA_Orders_TeamA_Salespersons_SalespersonID">
+            <End Role="SalesPersons" EntitySet="SalesPersons" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_Products_ReturnDetails_ProductID" Association="Self.FK_TeamA_Products_ReturnDetails_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamA_ReturnTable_ReturnDetails_ReturnID" Association="Self.FK_TeamA_ReturnTable_ReturnDetails_ReturnID">
+            <End Role="Return" EntitySet="Returns" />
+            <End Role="ReturnDetails" EntitySet="ReturnDetails" />
+          </AssociationSet>
+          <FunctionImport Name="AddAddress">
+            <Parameter Name="AddressID" Mode="In" Type="String" />
+            <Parameter Name="RetailerID" Mode="In" Type="String" />
+            <Parameter Name="Line1" Mode="In" Type="String" />
+            <Parameter Name="Line2" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Pincode" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="MobileNo" Mode="In" Type="String" />
+            <Parameter Name="CreationDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="LastModifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="AddOrder">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+            <Parameter Name="salespersonID" Mode="In" Type="Guid" />
+            <Parameter Name="totalQuantity" Mode="In" Type="Int32" />
+            <Parameter Name="totalAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="channelOfSale" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddOrderDetails">
+            <Parameter Name="orderDetailID" Mode="In" Type="Guid" />
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="discountedUnitPrice" Mode="In" Type="Int32" />
+            <Parameter Name="totalPrice" Mode="In" Type="Int32" />
+            <Parameter Name="giftPacking" Mode="In" Type="Boolean" />
+            <Parameter Name="addressID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="AddProduct">
+            <Parameter Name="prodid" Mode="In" Type="Guid" />
+            <Parameter Name="prodname" Mode="In" Type="String" />
+            <Parameter Name="category" Mode="In" Type="String" />
+            <Parameter Name="stock" Mode="In" Type="Int32" />
+            <Parameter Name="size" Mode="In" Type="String" />
+            <Parameter Name="colour" Mode="In" Type="String" />
+            <Parameter Name="techspecs" Mode="In" Type="String" />
+            <Parameter Name="cprice" Mode="In" Type="Decimal" />
+            <Parameter Name="sprice" Mode="In" Type="Decimal" />
+            <Parameter Name="discountpercentage" Mode="In" Type="Decimal" />
+            <Parameter Name="img" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="AddRetailer">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+            <Parameter Name="retailerName" Mode="In" Type="String" />
+            <Parameter Name="retailerMobile" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="retailerPassword" Mode="In" Type="String" />
+            <Parameter Name="creationDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="AddReturn">
+            <Parameter Name="returnID" Mode="In" Type="Guid" />
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+            <Parameter Name="channelOfReturn" Mode="In" Type="String" />
+            <Parameter Name="returnAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="returnDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="lastModifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="AddReturnDetails">
+            <Parameter Name="returnDetailID" Mode="In" Type="Guid" />
+            <Parameter Name="returnID" Mode="In" Type="Guid" />
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="reasonOfReturn" Mode="In" Type="String" />
+            <Parameter Name="unitPrice" Mode="In" Type="Int32" />
+            <Parameter Name="totalPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="addressID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="AddSalesPerson">
+            <Parameter Name="salespersonid" Mode="In" Type="Guid" />
+            <Parameter Name="salespersonname" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="salary" Mode="In" Type="Decimal" />
+            <Parameter Name="bonus" Mode="In" Type="Decimal" />
+            <Parameter Name="target" Mode="In" Type="Decimal" />
+            <Parameter Name="joiningdate" Mode="In" Type="DateTime" />
+            <Parameter Name="addressl1" Mode="In" Type="String" />
+            <Parameter Name="addressl2" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="pincode" Mode="In" Type="String" />
+            <Parameter Name="birthdate" Mode="In" Type="DateTime" />
+            <Parameter Name="lastAccountModifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteAddress">
+            <Parameter Name="AddressID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOrderDetails">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProduct">
+            <Parameter Name="prodid" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteRetailer">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteReturn">
+            <Parameter Name="returnID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteReturnDetails">
+            <Parameter Name="returnID" Mode="In" Type="Guid" />
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteSalesPerson">
+            <Parameter Name="salespersonid" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllAddresses" ReturnType="Collection(GreatOutdoorsModel.GetAllAddresses_Result)" />
+          <FunctionImport Name="GetAllProducts" ReturnType="Collection(GreatOutdoorsModel.GetAllProducts_Result)" />
+          <FunctionImport Name="GetAllRetailers" ReturnType="Collection(GreatOutdoorsModel.GetAllRetailers_Result)" />
+          <FunctionImport Name="GetAllReturnDetails" ReturnType="Collection(GreatOutdoorsModel.GetAllReturnDetails_Result)" />
+          <FunctionImport Name="GetAllReturns" ReturnType="Collection(GreatOutdoorsModel.GetAllReturns_Result)" />
+          <FunctionImport Name="GetAllSalesPersons" ReturnType="Collection(GreatOutdoorsModel.GetAllSalesPersons_Result)" />
+          <FunctionImport Name="GetOrderDetailsByOrderID" ReturnType="Collection(GreatOutdoorsModel.GetOrderDetailsByOrderID_Result)">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetOrderDetailsByProductID" ReturnType="Collection(GreatOutdoorsModel.GetOrderDetailsByProductID_Result)">
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetOrderOnlineSold" ReturnType="Collection(GreatOutdoorsModel.GetOrderOnlineSold_Result)" />
+          <FunctionImport Name="GetOrdersByOrderID" ReturnType="Collection(GreatOutdoorsModel.GetOrdersByOrderID_Result)">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetOrdersbyRetailerID" ReturnType="Collection(GreatOutdoorsModel.GetOrdersbyRetailerID_Result)">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetOrdersBySalespersonID" ReturnType="Collection(GreatOutdoorsModel.GetOrdersBySalespersonID_Result)">
+            <Parameter Name="salespersonID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductByProductID" ReturnType="Collection(GreatOutdoorsModel.GetProductByProductID_Result)">
+            <Parameter Name="prodid" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByCategory" ReturnType="Collection(GreatOutdoorsModel.GetProductsByCategory_Result)">
+            <Parameter Name="category" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByName" ReturnType="Collection(GreatOutdoorsModel.GetProductsByName_Result)">
+            <Parameter Name="prodname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRetailerByEmail" ReturnType="Collection(GreatOutdoorsModel.GetRetailerByEmail_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRetailerByEmailAndPassword" ReturnType="Collection(GreatOutdoorsModel.GetRetailerByEmailAndPassword_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="retailerPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRetailerByName" ReturnType="Collection(GreatOutdoorsModel.GetRetailerByName_Result)">
+            <Parameter Name="retailerName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRetailerByRetailerID" ReturnType="Collection(GreatOutdoorsModel.GetRetailerByRetailerID_Result)">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetReturnByOrderID" ReturnType="Collection(GreatOutdoorsModel.GetReturnByOrderID_Result)">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetReturnByReturnID" ReturnType="Collection(GreatOutdoorsModel.GetReturnByReturnID_Result)">
+            <Parameter Name="returnID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetReturnDetailsByProductID" ReturnType="Collection(GreatOutdoorsModel.GetReturnDetailsByProductID_Result)">
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetReturnDetailsByReturnID" ReturnType="Collection(GreatOutdoorsModel.GetReturnDetailsByReturnID_Result)">
+            <Parameter Name="returnID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetSalesPersonByEmail" ReturnType="Collection(GreatOutdoorsModel.GetSalesPersonByEmail_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSalesPersonByEmailAndPassword" ReturnType="Collection(GreatOutdoorsModel.GetSalesPersonByEmailAndPassword_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSalesPersonBySalesPersonID" ReturnType="Collection(GreatOutdoorsModel.GetSalesPersonBySalesPersonID_Result)">
+            <Parameter Name="salespersonid" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetSalesPersonsByName" ReturnType="Collection(GreatOutdoorsModel.GetSalesPersonsByName_Result)">
+            <Parameter Name="salespersonname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAddress">
+            <Parameter Name="AddressID" Mode="In" Type="String" />
+            <Parameter Name="RetailerID" Mode="In" Type="String" />
+            <Parameter Name="Line1" Mode="In" Type="String" />
+            <Parameter Name="Line2" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Pincode" Mode="In" Type="Int32" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="MobileNo" Mode="In" Type="String" />
+            <Parameter Name="CreationDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="LastModifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateOrderDetailStatus">
+            <Parameter Name="orderID" Mode="In" Type="Guid" />
+            <Parameter Name="productID" Mode="In" Type="Guid" />
+            <Parameter Name="currentStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdatePassword">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+            <Parameter Name="retailerPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateProductDetails">
+            <Parameter Name="prodid" Mode="In" Type="Guid" />
+            <Parameter Name="prodname" Mode="In" Type="String" />
+            <Parameter Name="category" Mode="In" Type="String" />
+            <Parameter Name="size" Mode="In" Type="String" />
+            <Parameter Name="colour" Mode="In" Type="String" />
+            <Parameter Name="techspecs" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateProductStock">
+            <Parameter Name="prodid" Mode="In" Type="Guid" />
+            <Parameter Name="stock" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateRetailer">
+            <Parameter Name="retailerID" Mode="In" Type="Guid" />
+            <Parameter Name="retailerName" Mode="In" Type="String" />
+            <Parameter Name="retailerMobile" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="modifiedDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateSalesPerson">
+            <Parameter Name="salespersonid" Mode="In" Type="Guid" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateSalesPersonPassword">
+            <Parameter Name="salespersonid" Mode="In" Type="Guid" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetAllAddresses_Result">
+          <Property Type="Guid" Name="AddressID" Nullable="false" />
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="Line1" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Line2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="Pincode" Nullable="false" />
+          <Property Type="String" Name="States" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModifiedDateTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetAllProducts_Result">
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="30" />
+          <Property Type="Binary" Name="Image" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="String" Name="Size" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Colour" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="TechnicalSpecifications" Nullable="false" MaxLength="5000" />
+          <Property Type="Decimal" Name="CostPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SellingPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DiscountPercentage" Nullable="true" Precision="2" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetAllRetailers_Result">
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="RetailerName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerMobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerPassword" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetAllReturnDetails_Result">
+          <Property Type="Guid" Name="ReturnDetailID" Nullable="false" />
+          <Property Type="Guid" Name="ReturnID" Nullable="true" />
+          <Property Type="Guid" Name="ProductID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="ReasonOfReturn" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Guid" Name="AddressID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllReturns_Result">
+          <Property Type="Guid" Name="ReturnID" Nullable="false" />
+          <Property Type="Guid" Name="OrderID" Nullable="true" />
+          <Property Type="String" Name="ChannelOfReturn" Nullable="false" MaxLength="7" />
+          <Property Type="Decimal" Name="ReturnAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="ReturnDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModifiedDateTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetAllSalesPersons_Result">
+          <Property Type="Guid" Name="SalespersonID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Bonus" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Target" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="JoiningDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="Birthdate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastAccountModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetOrderDetailsByOrderID_Result">
+          <Property Type="Guid" Name="OrderDetailID" Nullable="false" />
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="DiscountedUnitPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Boolean" Name="GiftPacking" Nullable="true" />
+          <Property Type="Guid" Name="AddressID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOrderDetailsByProductID_Result">
+          <Property Type="Guid" Name="OrderDetailID" Nullable="false" />
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="DiscountedUnitPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Boolean" Name="GiftPacking" Nullable="true" />
+          <Property Type="Guid" Name="AddressID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOrderOnlineSold_Result">
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="RetailerID" Nullable="true" />
+          <Property Type="Guid" Name="SalespersonID" Nullable="true" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="ChannelOfSale" Nullable="false" MaxLength="7" />
+          <Property Type="DateTime" Name="OrderDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetOrdersByOrderID_Result">
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="RetailerID" Nullable="true" />
+          <Property Type="Guid" Name="SalespersonID" Nullable="true" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="ChannelOfSale" Nullable="false" MaxLength="7" />
+          <Property Type="DateTime" Name="OrderDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetOrdersbyRetailerID_Result">
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="RetailerID" Nullable="true" />
+          <Property Type="Guid" Name="SalespersonID" Nullable="true" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="ChannelOfSale" Nullable="false" MaxLength="7" />
+          <Property Type="DateTime" Name="OrderDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetOrdersBySalespersonID_Result">
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="Guid" Name="RetailerID" Nullable="true" />
+          <Property Type="Guid" Name="SalespersonID" Nullable="true" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="ChannelOfSale" Nullable="false" MaxLength="7" />
+          <Property Type="DateTime" Name="OrderDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetProductByProductID_Result">
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="30" />
+          <Property Type="Binary" Name="Image" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="String" Name="Size" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Colour" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="TechnicalSpecifications" Nullable="false" MaxLength="5000" />
+          <Property Type="Decimal" Name="CostPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SellingPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DiscountPercentage" Nullable="true" Precision="2" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByCategory_Result">
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="30" />
+          <Property Type="Binary" Name="Image" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="String" Name="Size" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Colour" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="TechnicalSpecifications" Nullable="false" MaxLength="5000" />
+          <Property Type="Decimal" Name="CostPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SellingPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DiscountPercentage" Nullable="true" Precision="2" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByName_Result">
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="30" />
+          <Property Type="Binary" Name="Image" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="String" Name="Size" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Colour" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="TechnicalSpecifications" Nullable="false" MaxLength="5000" />
+          <Property Type="Decimal" Name="CostPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SellingPrice" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DiscountPercentage" Nullable="true" Precision="2" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetRetailerByEmail_Result">
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="RetailerName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerMobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerPassword" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetRetailerByEmailAndPassword_Result">
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="RetailerName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerMobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerPassword" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetRetailerByName_Result">
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="RetailerName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerMobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerPassword" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetRetailerByRetailerID_Result">
+          <Property Type="Guid" Name="RetailerID" Nullable="false" />
+          <Property Type="String" Name="RetailerName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerMobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RetailerPassword" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="CreationDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetReturnByOrderID_Result">
+          <Property Type="Guid" Name="ReturnID" Nullable="false" />
+          <Property Type="Guid" Name="OrderID" Nullable="true" />
+          <Property Type="String" Name="ChannelOfReturn" Nullable="false" MaxLength="7" />
+          <Property Type="Decimal" Name="ReturnAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="ReturnDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModifiedDateTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetReturnByReturnID_Result">
+          <Property Type="Guid" Name="ReturnID" Nullable="false" />
+          <Property Type="Guid" Name="OrderID" Nullable="true" />
+          <Property Type="String" Name="ChannelOfReturn" Nullable="false" MaxLength="7" />
+          <Property Type="Decimal" Name="ReturnAmount" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="ReturnDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModifiedDateTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetReturnDetailsByProductID_Result">
+          <Property Type="Guid" Name="ReturnDetailID" Nullable="false" />
+          <Property Type="Guid" Name="ReturnID" Nullable="true" />
+          <Property Type="Guid" Name="ProductID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="ReasonOfReturn" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Guid" Name="AddressID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetReturnDetailsByReturnID_Result">
+          <Property Type="Guid" Name="ReturnDetailID" Nullable="false" />
+          <Property Type="Guid" Name="ReturnID" Nullable="true" />
+          <Property Type="Guid" Name="ProductID" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="ReasonOfReturn" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="Guid" Name="AddressID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSalesPersonByEmail_Result">
+          <Property Type="Guid" Name="SalespersonID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Bonus" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Target" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="JoiningDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="Birthdate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastAccountModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetSalesPersonByEmailAndPassword_Result">
+          <Property Type="Guid" Name="SalespersonID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Bonus" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Target" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="JoiningDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="Birthdate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastAccountModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetSalesPersonBySalesPersonID_Result">
+          <Property Type="Guid" Name="SalespersonID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Bonus" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Target" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="JoiningDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="Birthdate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastAccountModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetSalesPersonsByName_Result">
+          <Property Type="Guid" Name="SalespersonID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Mobile" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="12" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Bonus" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="Target" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="DateTime" Name="JoiningDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="AddressLine2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="Birthdate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastAccountModifiedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GreatOutdoorsModelStoreContainer" CdmEntityContainer="TeamAEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="Line1" ColumnName="Line1" />
+                <ScalarProperty Name="Line2" ColumnName="Line2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="States" ColumnName="States" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DiscountedUnitPrice" ColumnName="DiscountedUnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="GiftPacking" ColumnName="GiftPacking" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ChannelOfSale" ColumnName="ChannelOfSale" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="TechnicalSpecifications" ColumnName="TechnicalSpecifications" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Retailers">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.Retailer">
+              <MappingFragment StoreEntitySet="Retailers">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="RetailerDiscountPercentage" ColumnName="RetailerDiscountPercentage" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Returns">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.Return">
+              <MappingFragment StoreEntitySet="Return">
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ChannelOfReturn" ColumnName="ChannelOfReturn" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="ReturnDateTime" ColumnName="ReturnDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnDetails">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.ReturnDetail">
+              <MappingFragment StoreEntitySet="ReturnDetails">
+                <ScalarProperty Name="ReturnDetailID" ColumnName="ReturnDetailID" />
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ReasonOfReturn" ColumnName="ReasonOfReturn" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesPersons">
+            <EntityTypeMapping TypeName="GreatOutdoorsModel.SalesPerson">
+              <MappingFragment StoreEntitySet="SalesPersons">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddAddress" FunctionName="GreatOutdoorsModel.Store.AddAddress" />
+          <FunctionImportMapping FunctionImportName="AddOrder" FunctionName="GreatOutdoorsModel.Store.AddOrder" />
+          <FunctionImportMapping FunctionImportName="AddOrderDetails" FunctionName="GreatOutdoorsModel.Store.AddOrderDetails" />
+          <FunctionImportMapping FunctionImportName="AddProduct" FunctionName="GreatOutdoorsModel.Store.AddProduct" />
+          <FunctionImportMapping FunctionImportName="AddRetailer" FunctionName="GreatOutdoorsModel.Store.AddRetailer" />
+          <FunctionImportMapping FunctionImportName="AddReturn" FunctionName="GreatOutdoorsModel.Store.AddReturn" />
+          <FunctionImportMapping FunctionImportName="AddReturnDetails" FunctionName="GreatOutdoorsModel.Store.AddReturnDetails" />
+          <FunctionImportMapping FunctionImportName="AddSalesPerson" FunctionName="GreatOutdoorsModel.Store.AddSalesPerson" />
+          <FunctionImportMapping FunctionImportName="DeleteAddress" FunctionName="GreatOutdoorsModel.Store.DeleteAddress" />
+          <FunctionImportMapping FunctionImportName="DeleteOrderDetails" FunctionName="GreatOutdoorsModel.Store.DeleteOrderDetails" />
+          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="GreatOutdoorsModel.Store.DeleteProduct" />
+          <FunctionImportMapping FunctionImportName="DeleteRetailer" FunctionName="GreatOutdoorsModel.Store.DeleteRetailer" />
+          <FunctionImportMapping FunctionImportName="DeleteReturn" FunctionName="GreatOutdoorsModel.Store.DeleteReturn" />
+          <FunctionImportMapping FunctionImportName="DeleteReturnDetails" FunctionName="GreatOutdoorsModel.Store.DeleteReturnDetails" />
+          <FunctionImportMapping FunctionImportName="DeleteSalesPerson" FunctionName="GreatOutdoorsModel.Store.DeleteSalesPerson" />
+          <FunctionImportMapping FunctionImportName="GetAllAddresses" FunctionName="GreatOutdoorsModel.Store.GetAllAddresses">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllAddresses_Result">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="Line1" ColumnName="Line1" />
+                <ScalarProperty Name="Line2" ColumnName="Line2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="States" ColumnName="States" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllProducts" FunctionName="GreatOutdoorsModel.Store.GetAllProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllProducts_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="TechnicalSpecifications" ColumnName="TechnicalSpecifications" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllRetailers" FunctionName="GreatOutdoorsModel.Store.GetAllRetailers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllRetailers_Result">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllReturnDetails" FunctionName="GreatOutdoorsModel.Store.GetAllReturnDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllReturnDetails_Result">
+                <ScalarProperty Name="ReturnDetailID" ColumnName="ReturnDetailID" />
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ReasonOfReturn" ColumnName="ReasonOfReturn" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllReturns" FunctionName="GreatOutdoorsModel.Store.GetAllReturns">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllReturns_Result">
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ChannelOfReturn" ColumnName="ChannelOfReturn" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="ReturnDateTime" ColumnName="ReturnDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllSalesPersons" FunctionName="GreatOutdoorsModel.Store.GetAllSalesPersons">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetAllSalesPersons_Result">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrderDetailsByOrderID" FunctionName="GreatOutdoorsModel.Store.GetOrderDetailsByOrderID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrderDetailsByOrderID_Result">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DiscountedUnitPrice" ColumnName="DiscountedUnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="GiftPacking" ColumnName="GiftPacking" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrderDetailsByProductID" FunctionName="GreatOutdoorsModel.Store.GetOrderDetailsByProductID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrderDetailsByProductID_Result">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DiscountedUnitPrice" ColumnName="DiscountedUnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="GiftPacking" ColumnName="GiftPacking" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrderOnlineSold" FunctionName="GreatOutdoorsModel.Store.GetOrderOnlineSold">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrderOnlineSold_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ChannelOfSale" ColumnName="ChannelOfSale" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrdersByOrderID" FunctionName="GreatOutdoorsModel.Store.GetOrdersByOrderID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrdersByOrderID_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ChannelOfSale" ColumnName="ChannelOfSale" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrdersbyRetailerID" FunctionName="GreatOutdoorsModel.Store.GetOrdersbyRetailerID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrdersbyRetailerID_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ChannelOfSale" ColumnName="ChannelOfSale" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrdersBySalespersonID" FunctionName="GreatOutdoorsModel.Store.GetOrdersBySalespersonID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetOrdersBySalespersonID_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ChannelOfSale" ColumnName="ChannelOfSale" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductByProductID" FunctionName="GreatOutdoorsModel.Store.GetProductByProductID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetProductByProductID_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="TechnicalSpecifications" ColumnName="TechnicalSpecifications" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByCategory" FunctionName="GreatOutdoorsModel.Store.GetProductsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetProductsByCategory_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="TechnicalSpecifications" ColumnName="TechnicalSpecifications" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByName" FunctionName="GreatOutdoorsModel.Store.GetProductsByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetProductsByName_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="TechnicalSpecifications" ColumnName="TechnicalSpecifications" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRetailerByEmail" FunctionName="GreatOutdoorsModel.Store.GetRetailerByEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetRetailerByEmail_Result">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRetailerByEmailAndPassword" FunctionName="GreatOutdoorsModel.Store.GetRetailerByEmailAndPassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetRetailerByEmailAndPassword_Result">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRetailerByName" FunctionName="GreatOutdoorsModel.Store.GetRetailerByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetRetailerByName_Result">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRetailerByRetailerID" FunctionName="GreatOutdoorsModel.Store.GetRetailerByRetailerID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetRetailerByRetailerID_Result">
+                <ScalarProperty Name="RetailerID" ColumnName="RetailerID" />
+                <ScalarProperty Name="RetailerName" ColumnName="RetailerName" />
+                <ScalarProperty Name="RetailerMobile" ColumnName="RetailerMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RetailerPassword" ColumnName="RetailerPassword" />
+                <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetReturnByOrderID" FunctionName="GreatOutdoorsModel.Store.GetReturnByOrderID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetReturnByOrderID_Result">
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ChannelOfReturn" ColumnName="ChannelOfReturn" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="ReturnDateTime" ColumnName="ReturnDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetReturnByReturnID" FunctionName="GreatOutdoorsModel.Store.GetReturnByReturnID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetReturnByReturnID_Result">
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ChannelOfReturn" ColumnName="ChannelOfReturn" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="ReturnDateTime" ColumnName="ReturnDateTime" />
+                <ScalarProperty Name="LastModifiedDateTime" ColumnName="LastModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetReturnDetailsByProductID" FunctionName="GreatOutdoorsModel.Store.GetReturnDetailsByProductID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetReturnDetailsByProductID_Result">
+                <ScalarProperty Name="ReturnDetailID" ColumnName="ReturnDetailID" />
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ReasonOfReturn" ColumnName="ReasonOfReturn" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetReturnDetailsByReturnID" FunctionName="GreatOutdoorsModel.Store.GetReturnDetailsByReturnID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetReturnDetailsByReturnID_Result">
+                <ScalarProperty Name="ReturnDetailID" ColumnName="ReturnDetailID" />
+                <ScalarProperty Name="ReturnID" ColumnName="ReturnID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ReasonOfReturn" ColumnName="ReasonOfReturn" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSalesPersonByEmail" FunctionName="GreatOutdoorsModel.Store.GetSalesPersonByEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetSalesPersonByEmail_Result">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSalesPersonByEmailAndPassword" FunctionName="GreatOutdoorsModel.Store.GetSalesPersonByEmailAndPassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetSalesPersonByEmailAndPassword_Result">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSalesPersonBySalesPersonID" FunctionName="GreatOutdoorsModel.Store.GetSalesPersonBySalesPersonID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetSalesPersonBySalesPersonID_Result">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSalesPersonsByName" FunctionName="GreatOutdoorsModel.Store.GetSalesPersonsByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GreatOutdoorsModel.GetSalesPersonsByName_Result">
+                <ScalarProperty Name="SalespersonID" ColumnName="SalespersonID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="LastAccountModifiedDateTime" ColumnName="LastAccountModifiedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateAddress" FunctionName="GreatOutdoorsModel.Store.UpdateAddress" />
+          <FunctionImportMapping FunctionImportName="UpdateOrderDetailStatus" FunctionName="GreatOutdoorsModel.Store.UpdateOrderDetailStatus" />
+          <FunctionImportMapping FunctionImportName="UpdatePassword" FunctionName="GreatOutdoorsModel.Store.UpdatePassword" />
+          <FunctionImportMapping FunctionImportName="UpdateProductDetails" FunctionName="GreatOutdoorsModel.Store.UpdateProductDetails" />
+          <FunctionImportMapping FunctionImportName="UpdateProductStock" FunctionName="GreatOutdoorsModel.Store.UpdateProductStock" />
+          <FunctionImportMapping FunctionImportName="UpdateRetailer" FunctionName="GreatOutdoorsModel.Store.UpdateRetailer" />
+          <FunctionImportMapping FunctionImportName="UpdateSalesPerson" FunctionName="GreatOutdoorsModel.Store.UpdateSalesPerson" />
+          <FunctionImportMapping FunctionImportName="UpdateSalesPersonPassword" FunctionName="GreatOutdoorsModel.Store.UpdateSalesPersonPassword" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

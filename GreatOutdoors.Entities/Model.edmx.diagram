@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42a75d49cf294208b1c4f3e6fa7757c6" Name="Diagram1">
+        <EntityTypeShape EntityType="GreatOutdoorsModel.Address" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.OrderDetail" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.Order" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.Product" Width="1.5" PointX="6" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.Retailer" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.Return" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.ReturnDetail" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreatOutdoorsModel.SalesPerson" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Address_ReturnDetails_AddressID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Addresses_RetailerID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_OrderDetails_TeamA_Addresses_AddressID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_OrderDetails_TeamA_Orders_OrderID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_OrderDetails_TeamA_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Orders_ReturnTable_OrderID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Orders_TeamA_Retailers_RetailerID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Orders_TeamA_Salespersons_SalespersonID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_Products_ReturnDetails_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="GreatOutdoorsModel.FK_TeamA_ReturnTable_ReturnDetails_ReturnID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
