@@ -1,0 +1,38 @@
+﻿<Window x:Class="WpfApp_ReturnCancel.ReturnOrCancel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp_ReturnCancel"
+        mc:Ignorable="d"
+        Title="Return and Cancel Window" Height="450" Width="800">
+    <Grid>
+        <DataGrid Name="ReturnCancel" AlternatingRowBackground = "LightBlue"  AlternationCount = "2" AutoGenerateColumns = "False"  HorizontalAlignment="Left" Height="190" Margin="37,24,0,0" VerticalAlignment="Top" Width="472">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="No"/>
+                <DataGridTextColumn Header="Product ID"/>
+                <DataGridTextColumn Header="Quantity"/>
+                <DataGridTextColumn Header="Total Price"/>
+                <DataGridTextColumn Header="Current Status"/>
+                <DataGridTextColumn Header="Return"/>
+                <DataGridTextColumn Header="Cancel"/>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="PlaceReturn">Details</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="RequestCancel">Details</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
