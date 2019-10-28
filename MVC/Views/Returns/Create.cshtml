@@ -1,0 +1,88 @@
+﻿@model GreatOutdoors.MVC.Models.ReturnViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2 class="col-md-4 mx-auto">Place Return</h2>
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-6 mx-auto border-secondary">
+
+                    <div class="form-group form-row">
+                        @Html.LabelFor(temp => temp.OrderID, new { @class = "col-form-label col-lg-3" })
+                        @Html.DropDownListFor(temp => temp.OrderID, ViewBag.orderlist as SelectList)
+
+                    </div>
+
+                    <div class="form-group form-row">
+                        @Html.LabelFor(temp => temp.TotalQuantity, new { @class = "col-form-label col-lg-3" })
+                        @Html.TextBoxFor(temp => temp.TotalQuantity, new { @class = "form-control label col-lg-2" })
+                    </div>
+
+
+
+
+                    <div class="form-group form-check form-row">
+                        @Html.LabelFor(temp => temp.ReasonOfReturn, new { @class = "col-form-label col-lg-3" })
+                        @Html.RadioButtonFor(temp => temp.ReasonOfReturn, new { @class = "form-check-input", value = "Wrong", id = "Wrong" })
+                        <label for="Wrong">Wrong</label>
+                        @Html.RadioButtonFor(temp => temp.ReasonOfReturn, new { @class = "form-check-input", value = "Incomplete", id = "Incomplete" })
+                        <label for="Wrong">Incomplete</label>
+                        <div class="col-md-6">
+                            @Html.ValidationMessageFor(temp => temp.ReasonOfReturn)
+                        </div>
+                    </div>
+
+
+
+
+
+                    @*<div class="form-group form-row">
+                            @Html.LabelFor(temp => temp.Feedback, new { @class = "col-form-label col-lg-3" })
+                            @Html.TextBoxFor(temp => temp.Feedback, new { @class = "form-control label col-lg-9", placeholder = "Write Feedback" })
+                            @Html.ValidationMessageFor(temp=>temp.Feedback)
+                        </div>
+
+                        <div class="form-group form-check form-row">
+                            @Html.CheckBoxFor(temp => temp.variable, new { @class = "form-check-input" })
+                            @Html.LabelFor(temp => temp.variable, new { @class = "form-check-label" })
+
+                        </div>
+
+                        <div class="form-group form-row">
+                            @Html.LabelFor(temp => temp.dropdown, new { @class = "col-form-label col-lg-3" })
+                            @Html.DropDownListFor(temp => temp.dropdown,
+                           new List<SelectListItem>()
+                           {
+                               new SelectListItem(){ Text="Selected Item",Value=null},
+                               new SelectListItem(){ Text="Left",Value="Left"},
+                               new SelectListItem(){ Text="Right",Value="Right"}
+                           },new { @class=""})
+                        </div>*@
+
+                    <div class="border-top text-right pt-2">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>
