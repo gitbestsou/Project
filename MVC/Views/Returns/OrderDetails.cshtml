@@ -1,4 +1,4 @@
-﻿@model List<GreatOutdoors.MVC.Models.OrderDetailViewModel>
+﻿@model List<GreatOutdoors.Mvc.Models.OrderDetailViewModel>
 
 <!DOCTYPE html>
 
@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2 class="col-md-4 mx-auto">Place Return or Cancel</h2>
+        <h2 class="col-md-4">Order Details</h2>
 
         <table class="table">
             <thead>
@@ -22,26 +22,26 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Order Status</th>
-                    <th>Action</th>
-                    <th>Action</th>
+                    <th></th>
+                    <th></th>
                 </tr>
 
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.TotalPrice</td>
-                    <td>@item.CurrentStatus</td>
-                    <td>
-                        <a href="@Url.Action("PlaceReturn", "Returns",new { id = item.OrderDetailID })">Return</a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("RequestCancel", "Returns",new { id = item.OrderDetailID })">Cancel</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.TotalPrice</td>
+                        <td>@item.CurrentStatus</td>
+                        <td>
+                            <a href="@Url.Action("PlaceReturn", "Returns",new { id = item.OrderDetailID })" class="btn btn-dark">Return</a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("RequestCancel", "Returns",new { id = item.OrderDetailID })" class="btn btn-danger">Cancel</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

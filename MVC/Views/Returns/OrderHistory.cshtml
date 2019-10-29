@@ -1,4 +1,4 @@
-﻿@model List<GreatOutdoors.MVC.Models.OrderViewModel>
+﻿@model List<GreatOutdoors.Mvc.Models.OrderViewModel>
 
 <!DOCTYPE html>
 
@@ -13,8 +13,12 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2 class="col-md-4 mx-auto">View Order Details</h2>
-        
+        <div class="border-top text-right pt-2">
+            <a href="@Url.Action("ReturnHistory", "Returns")" class="btn btn-danger">View Return History</a>
+        </div>
+
+        <h2 class="col-md-4">Order History</h2>
+        <br />
         <table class="table">
             <thead>
                 <tr>
@@ -29,16 +33,16 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.OrderDateTime</td>
-                    <td>@item.TotalQuantity</td>
-                    <td>@item.TotalAmount</td>
-                    <td>@item.ChannelOfSale</td>
-                    <td>
-                      <a href="@Url.Action("OrderDetails", "Returns",new { id = item.OrderID })">View Details</a>
+                    <tr>
+                        <td>@item.OrderDateTime</td>
+                        <td>@item.TotalQuantity</td>
+                        <td>@item.TotalAmount</td>
+                        <td>@item.ChannelOfSale</td>
+                        <td>
+                            <a href="@Url.Action("OrderDetails", "Returns",new { id = item.OrderID })">View Details</a>
 
-                    </td>                    
-                </tr>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

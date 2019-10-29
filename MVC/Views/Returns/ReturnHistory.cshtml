@@ -1,17 +1,44 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model List<GreatOutdoors.Mvc.Models.ReturnViewModel>
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>ReturnHistory</title>
+    <title>Order History</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/umd/popper.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div> 
+    <div class="container-fluid">
+        <h2 class="col-md-4">Return History</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Reason Of Return</th>
+                    <th>Return Date</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.TotalAmount</td>
+                        <td>@item.ReasonOfReturn</td>
+                        <td>@item.ReturnDateTime</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
