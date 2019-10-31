@@ -1,0 +1,69 @@
+﻿@using System.Web.Optimization
+@model List<GreatOutdoors.Mvc.Models.OrderDetailViewModel>
+@Scripts.Render("~/scripts/jqueryvalidation")
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Order Details</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/umd/popper.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*<script type="text/javascript">
+                $(document).ready(function(){
+                    $("#submitButton").on("click", function () {
+                        alert('Your Message');
+                    });
+
+                });
+        </script>*@
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 class="col-md-4">Order Details</h2>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Order Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.TotalPrice</td>
+                        <td>@item.CurrentStatus</td>
+                        <td>
+                            <a href="@Url.Action("PlaceReturn", "Returns",new { id = item.OrderDetailID })" class="btn btn-dark">Return</a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("RequestCancel", "Returns",new { id = item.OrderDetailID })" class="btn btn-danger">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
