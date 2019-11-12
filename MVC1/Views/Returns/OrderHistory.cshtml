@@ -1,0 +1,64 @@
+﻿@*View to display the history of Orders
+    Project name : Great Outdoors
+    Developer name: Sourav Maji
+    Use case : Return
+    Creation date : 30/10/2019
+    Last modified : 08/11/2019*@
+
+
+
+@using System.Web.Optimization
+@model List<GreatOutdoors.Mvc.Models.OrderViewModel>
+
+@*Web Optimization*@
+@Scripts.Render("~/scripts/jqueryvalidation")
+@{
+    ViewBag.Title = "Order History";
+    Layout = "~/Views/Shared/GreatOutdoorsLayout.cshtml";
+}
+
+@*The script for pagination after importing the necessary bootstrap and jquesry files in shared view*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ohTable').DataTable();
+    });
+</script>
+
+<div class="container-fluid">
+    <div class="border-top text-right pt-2">
+        <a href="@Url.Action("ReturnHistory", "Returns")" class="btn btn-danger">View Return History</a>
+    </div>
+
+    <h2 class="col-md-4">Order History</h2>
+    <br />
+
+    @*Table to View Order History*@
+    <table id="ohTable" class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Order Date</th>
+                <th>Total Quantity</th>
+                <th>Total Price</th>
+                <th>Channel of Sale</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.OrderDateTime</td>
+                    <td>@item.TotalQuantity</td>
+                    <td>@item.TotalAmount</td>
+                    <td>@item.ChannelOfSale</td>
+                    <td>
+                        @*Passing the Order ID, the details of which needs to be viewed to the OrderDetails controller*@
+                        <a href="@Url.Action("OrderDetails", "Returns",new { id = item.OrderID})">View Details</a> 
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

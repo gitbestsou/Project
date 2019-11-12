@@ -1,0 +1,53 @@
+﻿@*View to display the history of Sales of a particular Salesperson
+    Project name : Great Outdoors
+    Developer name: Sourav Maji
+    Use case : Return
+    Creation date : 30/10/2019
+    Last modified : 08/11/2019*@
+@using System.Web.Optimization
+@model List<GreatOutdoors.Mvc.Models.OrderViewModel>
+
+@Scripts.Render("~/scripts/jqueryvalidation")
+@{
+    ViewBag.Title = "SalesHistory";
+    Layout = "~/Views/Shared/GreatOutdoorsLayout.cshtml";
+}
+
+@*The script for pagination after importing the necessary bootstrap and jquesry files in shared view*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sTable').DataTable();
+    });
+</script>
+<h2 class="col-md-4">Sales History</h2>
+<br />
+
+@*Table to view Sales History*@
+<table id="sTable" class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Retailer Name</th>
+            <th>Order Date</th>
+            <th>Total Quantity</th>
+            <th>Total Price</th>
+            <th>Channel of Sale</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RetailerName</td>
+                <td>@item.OrderDateTime</td>
+                <td>@item.TotalQuantity</td>
+                <td>@item.TotalAmount</td>
+                <td>@item.ChannelOfSale</td>
+                <td>
+                    <a href="@Url.Action("OrderDetails", "Returns",new { id = item.OrderID})">View Details</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

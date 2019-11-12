@@ -1,0 +1,84 @@
+﻿@*View to display the details of a particular Order
+    Project name : Great Outdoors
+    Developer name: Sourav Maji
+    Use case : Return
+    Creation date : 30/10/2019
+    Last modified :  08/11/2019*@
+
+
+
+@using System.Web.Optimization
+@model List<GreatOutdoors.Mvc.Models.OrderDetailViewModel>
+
+
+@*Web Optimization*@
+@Scripts.Render("~/scripts/jqueryvalidation")
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/GreatOutdoorsLayout.cshtml";
+}
+
+
+@*The script for pagination after importing the necessary bootstrap and jquesry files in shared view*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#odTable').DataTable();
+    });
+</script>
+
+
+<div class="container-fluid">
+    <h2 class="col-md-4">Order Details</h2>
+    @*Table to view Order Details*@
+    <table id="odTable" class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Order Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.TotalPrice</td>
+                    <td>@item.CurrentStatus</td>
+
+                    @*Disabling the button when the product status is 'Returned' or 'Cancelled'*@ 
+                    @if (item.CurrentStatus != "Returned" && item.CurrentStatus != "Cancelled")
+                    {
+                        <td>
+                            <a href="@Url.Action("PlaceReturn", "Returns",new { id = item.OrderDetailID })" class="btn btn-dark">Return</a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("RequestCancel", "Returns",new { id = item.OrderDetailID })" class="btn btn-danger">Cancel</a>
+                        </td>}
+                    else
+                    {
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>}
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@*The below code is commented because we have disabled the buttons when the order status is 'Returned' or 'Cancelled'*@
+
+@*@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}*@

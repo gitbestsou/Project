@@ -1,0 +1,53 @@
+﻿@*View to display the history of Return
+    Project name : Great Outdoors
+    Developer name: Sourav Maji
+    Use case : Return
+    Creation date : 30/10/2019
+    Last modified : 08/11/2019*@
+
+@using System.Web.Optimization
+@model List<GreatOutdoors.Mvc.Models.ReturnViewModel>
+
+@*Web Optimaztion*@
+@Scripts.Render("~/scripts/jqueryvalidation")
+@{
+    ViewBag.Title = "Return History";
+    Layout = "~/Views/Shared/GreatOutdoorsLayout.cshtml";
+}
+
+@*The script for pagination after importing the necessary bootstrap and jquesry files in shared view*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#rhTable').DataTable();
+    });
+</script>
+
+
+
+<div class="container-fluid">
+    <div class="header"><h1>Return History</h1></div>
+    @*Table to View History of Returns*@
+    <table id="rhTable" class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Reason Of Return</th>
+                <th>Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.TotalAmount</td>
+                    <td>@item.ReasonOfReturn</td>
+                    <td>@item.ReturnDateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
