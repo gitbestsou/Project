@@ -8,12 +8,13 @@ using Capgemini.GreatOutdoors.BusinessLayer;
 using GreatOutdoors.Entities;
 using Capgemini.GreatOutdoors.Contracts.BLContracts;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 /*Return Controller which contains methods 
  *  1. View Order History. 2. View Corresponding Order Details, 3. Perform Return, 4. Perform Cancel, 5. View Return History
 Project name : Great Outdoors
 Developer name: Sourav Maji
-Use case : Salesperson
+Use case : Return
 Creation date : 30/10/2019
 Last modified : 05/11/2019
  */
@@ -22,28 +23,171 @@ namespace GreatOutdoors.MVC.Controllers
 {
     public class ReturnsController : Controller
     {
-        //Creating and initializing viewmodel object
-        // GET: Returns
-        //URL:Returns/Create
-        
+        public async Task<ActionResult> ReturnHistory()
+        {
+            Guid id = (Guid)Session["RetailerID"]; // Get the ID of the Retailer who has logged in
+            List<ReturnViewModel> returnsVM = new List<ReturnViewModel>();
+
+
+
+            //WebAPI code has been commented
+
+            //Using WebAPI to view Return History
+            //using (var client = new HttpClient())
+            //{
+                   //client.BaseAddress = new Uri("http://localhost:50075/api/");
+            //    //HTTP GET
+            //    var responseTask = client.GetAsync($"ReturnsAPI?id={id}");
+            //    responseTask.Wait();
+
+            //    var result = responseTask.Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        var readTask = result.Content.ReadAsAsync<List<ReturnViewModel>>();
+            //        readTask.Wait();
+
+            //        returnsVM = readTask.Result;
+            //    }
+
+            //}
+
+
+
+
+
+
+
+            /*Commenting the WCF Service code. This code needs to be uncommented if you want to use WCF Service*/
+            //ReturnDetailsBL returnDetailsBL = new ReturnDetailsBL();
+            //List<ReturnDetail> returnDetails = new List<ReturnDetail>();
+            //Guid IDD = (Guid)Session["RetailerID"]; // Retrieving the Retailer ID who has logged in
+
+            ////Calling WCF Service
+            //ServiceReference1.Service1Client returnsServiceClient = new ServiceReference1.Service1Client();
+            //WCFService.ReturnDetailsDataContract[] returnsDC = returnsServiceClient.GetReturnDetailsByRetailerIDDAL(IDD);
+
+            //List<ReturnViewModel> returnsVM = new List<ReturnViewModel>();
+            //foreach (var item in returnsDC)
+            //{
+            //    ReturnViewModel newreturnVm = new ReturnViewModel();
+            //    newreturnVm.ReturnID = (Guid)item.ReturnID;
+            //    newreturnVm.ReturnDetailID = item.ReturnDetailID;
+            //    newreturnVm.ProductID = (Guid)item.ProductID;
+            //    newreturnVm.ReasonOfReturn = item.ReasonOfReturn;
+            //    newreturnVm.Quantity = item.Quantity;
+            //    newreturnVm.UnitPrice = item.UnitPrice;
+            //    newreturnVm.TotalAmount = item.TotalPrice;
+
+            //    ProductBL productBL = new ProductBL();
+            //    Product product = new Product();
+            //    product = await productBL.GetProductByProductIDBL((Guid)item.ProductID);
+            //    newreturnVm.ProductName = product.Name;
+
+            //    ReturnBL returnBL = new ReturnBL();
+            //    Return @return = new Return();
+            //    @return = await returnBL.GetReturnByReturnIDBL((Guid)item.ReturnID);
+            //    newreturnVm.ReturnDateTime = @return.ReturnDateTime;
+            //    returnsVM.Add(newreturnVm);
+            //}
+
+
+            List<ReturnDetail> returnDetails = new List<ReturnDetail>();
+            ReturnDetailsBL returnDetailsBL = new ReturnDetailsBL();
+            returnDetails = await returnDetailsBL.GetReturnDetailsByRetailerIDBL(id);
+
+            List<ReturnViewModel> returnsVM1 = new List<ReturnViewModel>();
+
+            foreach(var item in returnDetails)
+            {
+                //Declaring Product and Return to view the Product Name and ReturnDateTime
+                ProductBL productBL = new ProductBL();
+                Product product = new Product();
+                product = await productBL.GetProductByProductIDBL((Guid)item.ProductID);
+
+                ReturnBL returnBL = new ReturnBL();
+                Return @return = new Return();
+                @return = await returnBL.GetReturnByReturnIDBL((Guid)item.ReturnID);
+                ReturnViewModel returnViewModel = new ReturnViewModel()
+                {
+                    ReturnID = (Guid)item.ReturnID,
+                    ReturnDetailID = item.ReturnDetailID,
+                    ProductID = (Guid)item.ProductID,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.Quantity,
+                    ReasonOfReturn = item.ReasonOfReturn,
+                    TotalAmount = item.TotalPrice,
+                    ProductName = product.Name,
+                    ReturnDateTime = @return.ReturnDateTime
+                };
+                returnsVM1.Add(returnViewModel);
+                
+            }
+
+
+
+
+
+
+
+            return View(returnsVM1);
+        }
+
+
+
+
+
+
+
+
+
+
+
         //View Order History
         //GET:OrderHistory
         //URL:Retuns/OrderHistory
-        public async Task<ActionResult> OrderHistory()
+        public ActionResult OrderHistory()
         {
             OrderBL orderBL = new OrderBL();
-
             Guid id = (Guid)Session["RetailerID"]; // Get the ID of the Retailer who has logged in
-            List<Order> orders = await orderBL.GetOrderByRetailerIDBL(id); //Retrieving all the orders
-
             List<OrderViewModel> ordersVM = new List<OrderViewModel>();
 
-            foreach (var item in orders)
+
+            using (var client = new HttpClient())
             {
-                OrderViewModel orderVM = new OrderViewModel() { OrderID = item.OrderID, TotalQuantity = item.TotalQuantity, TotalAmount = item.TotalAmount, ChannelOfSale = item.ChannelOfSale, OrderDateTime = (DateTime)item.OrderDateTime }; // Setting the viewmodel properties to the properties of order
-                ordersVM.Add(orderVM);
+                client.BaseAddress = new Uri("http://localhost:55089/api/");
+                //HTTP GET
+                var responseTask = client.GetAsync($"ReturnsAPI?id={id}");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<List<OrderViewModel>>();
+                    readTask.Wait();
+
+                    ordersVM = readTask.Result;
+                }
+
             }
+
+
+
+            //List<Order> orders = await orderBL.GetOrderByRetailerIDBL(id); //Retrieving all the orders            
+            //foreach (var item in orders)
+            //{
+            //    OrderViewModel orderVM = new OrderViewModel() { OrderID = item.OrderID, TotalQuantity = item.TotalQuantity, TotalAmount = item.TotalAmount, ChannelOfSale = item.ChannelOfSale, OrderDateTime = (DateTime)item.OrderDateTime }; // Setting the viewmodel properties to the properties of order
+            //    ordersVM.Add(orderVM);
+            //}
+
+
             return View(ordersVM); // adding each individual view to the entire ViewModel
+
+
+
+
+
+
+
 
         }
 
@@ -249,79 +393,11 @@ namespace GreatOutdoors.MVC.Controllers
             return RedirectToAction("OrderDetails", new { id = orderDetail.OrderID });
         }
 
-        
+
         //View Return History
         //GET:ReturnHistory
         //URL:Retuns/ReturnHistory
 
-        public async Task<ActionResult> ReturnHistory()
-        {
-            ReturnDetailsBL returnDetailsBL = new ReturnDetailsBL();
-            List<ReturnDetail> returnDetails = new List<ReturnDetail>();
-            Guid IDD = (Guid)Session["RetailerID"]; // Retrieving the Retailer ID who has logged in
-
-            //Calling WCF Service
-            ServiceReference1.Service1Client returnsServiceClient = new ServiceReference1.Service1Client();
-            WCFService.ReturnDetailsDataContract[] returnsDC = returnsServiceClient.GetReturnDetailsByRetailerIDDAL(IDD);
-            
-            List<ReturnViewModel> returnsVM = new List<ReturnViewModel>();
-            foreach (var item in returnsDC)
-            {
-                ReturnViewModel newreturnVm = new ReturnViewModel();
-                newreturnVm.ReturnID = (Guid)item.ReturnID;
-                newreturnVm.ReturnDetailID = item.ReturnDetailID;
-                newreturnVm.ProductID = (Guid)item.ProductID;
-                newreturnVm.ReasonOfReturn = item.ReasonOfReturn;
-                newreturnVm.Quantity = item.Quantity;
-                newreturnVm.UnitPrice = item.UnitPrice;
-                newreturnVm.TotalAmount = item.TotalPrice;
-
-                ProductBL productBL = new ProductBL();
-                Product product = new Product();
-                product = await productBL.GetProductByProductIDBL((Guid)item.ProductID);
-                newreturnVm.ProductName = product.Name;
-
-                ReturnBL returnBL = new ReturnBL();
-                Return @return = new Return();
-                @return = await returnBL.GetReturnByReturnIDBL((Guid)item.ReturnID);
-                newreturnVm.ReturnDateTime = @return.ReturnDateTime;
-                returnsVM.Add(newreturnVm);
-            }
-
-
-            /*The below needs to be uncommented if we do not want use WCF service*/
-            //            ReturnID = (Guid)temp.ReturnID,
-            //            ReturnDetailID = temp.ReturnDetailID,
-            //            ProductID = (Guid)temp.ProductID,
-            //            ReasonOfReturn = temp.ReasonOfReturn,
-            //            Quantity = temp.Quantity,
-            //            UnitPrice = temp.UnitPrice,
-            //            TotalAmount = temp.TotalPrice 
-                        
-                //    }
-                //).ToList();
-
-
-
-
-            //returnDetails = await returnDetailsBL.GetReturnDetailsByRetailerIDBL(IDD);
-            ////List<ReturnViewModel> returnsVM = new List<ReturnViewModel>();
-            //foreach (var item in returnDetails)
-            //{
-            //    ProductBL productBL = new ProductBL();
-            //    Product product = new Product();
-            //    product = await productBL.GetProductByProductIDBL((Guid)item.ProductID);
-
-            //    ReturnBL returnBL = new ReturnBL();
-            //    Return @return = new Return();
-            //    @return =await returnBL.GetReturnByReturnIDBL((Guid)item.ReturnID);
-
-            //    ReturnViewModel returnVM = new ReturnViewModel {ProductName=product.Name,ReturnDateTime= @return.ReturnDateTime};
-                
-            //    returnsVM.Add(returnVM);
-            //}
-            return View(returnsVM);
-        }
-
+        
     }
 }
